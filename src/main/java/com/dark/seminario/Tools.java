@@ -14,11 +14,11 @@ import java.util.logging.Logger;
  */
 public class Tools {
     
-    public static Calendar getTime(String timestamp){
+    public static Calendar getTime(String pattern, String timestamp){
         Calendar calendar = null;
         try {
             Date date = null;
-            DateFormat formatter = new SimpleDateFormat("yyy-MM-dd HH:mm:ss");
+            DateFormat formatter = new SimpleDateFormat(pattern);
             date = (java.util.Date)formatter.parse(timestamp);
             calendar = Calendar.getInstance();
             calendar.setTime(date);
