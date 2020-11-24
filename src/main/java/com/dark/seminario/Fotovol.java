@@ -2,6 +2,7 @@ package com.dark.seminario;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +24,9 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 public class Fotovol {
     Sheet sheet;
     Workbook workbook;
-    Map<Integer, TimeStep> powerByHours;
+    Map<String, TimeStep> powerByHours;
             
-    public Fotovol(Map<Integer, TimeStep> powerByHours){
+    public Fotovol(Map<String, TimeStep> powerByHours){
         this.powerByHours = powerByHours;
     }
     
@@ -63,18 +64,13 @@ public class Fotovol {
                     String vdthr = dataFormatter.formatCellValue(dthr);
                     
                     Calendar time = Tools.getTime("yyyy-MM-dd HH:mm:ss", vdthr);
-                    int hour = time.get(Calendar.HOUR_OF_DAY);
-                    
-                    System.out.print(hour + " <<<<  ");
-                    System.out.print(vdthr + " ");
-                    
+                    String hashtime = toHashDate(time);
+                                        
                     Cell status = row.getCell(2);
                     String vstatus = dataFormatter.formatCellValue(status);
-                    System.out.print(vstatus + " ");
                     
                     Cell ppv = row.getCell(12);
                     String vppv = dataFormatter.formatCellValue(ppv);
-                    System.out.print(vppv);
                     
                     double iPower = 0;
                     try{
@@ -83,23 +79,22 @@ public class Fotovol {
                         
                     }
                     
-                    if(powerByHours.containsKey(hour)){
-                        TimeStep temp = powerByHours.get(hour);
+                    if(powerByHours.containsKey(hashtime)){
+                        TimeStep temp = powerByHours.get(hashtime);
                         temp.newStep(iPower);
                     } else{
                         TimeStep ts = new TimeStep();
                         ts.newStep(iPower);
-                        powerByHours.put(hour, ts);
+                        powerByHours.put(hashtime, ts);
                     }
                     
                 }
-                System.out.println("");
             }
             
             // Closing the workbook
             workbook.close();
             
-            for (Integer key : powerByHours.keySet()) {
+            for (String key : powerByHours.keySet()) {
                 
                 //Capturamos o valor a partir da chave
                 TimeStep value = powerByHours.get(key);
@@ -107,6 +102,21 @@ public class Fotovol {
             }
         } catch (IOException ex) {
             Logger.getLogger(Fotovol.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
+    
+    private String toHashDate(Calendar date) {
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMddHH");
+            // Output "Wed Sep 26 14:23:28 EST 2012"
+            
+            String formatted = format1.format(date.getTime());
+            return(formatted);            
+            // Output "Wed Sep 26 00:00:00 EST 2012"
+        } catch (Exception ex) {
+            return "0000000000";
         }
     }
 }

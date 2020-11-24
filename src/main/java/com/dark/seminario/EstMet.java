@@ -3,17 +3,19 @@ package com.dark.seminario;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 /**
  *
  * @author rmichel
  */
 public class EstMet {
-    ArrayList<FinalData> registrosEM;
+    Map<String, FinalData> registrosEM;
     
-    public EstMet(ArrayList<FinalData> registrosEM){
+    public EstMet(Map<String, FinalData> registrosEM){
         this.registrosEM = registrosEM;
     }
     
@@ -33,10 +35,12 @@ public class EstMet {
         }
     }
     
-    public void extractData(){
+    public void extractData() throws Exception{
         info.remove(0);
         for(String[] inf: info){
             Calendar date = toDate(inf[0], inf[1]);
+            String hashDate = toHashDate(date);
+            
             FinalData fd = new FinalData();
             fd.setDate(date);
             fd.setPrecipitacao(vToDouble(inf[2]));
@@ -56,8 +60,12 @@ public class EstMet {
             fd.setVentoDir(vToDouble(inf[16]));
             fd.setVentoMax(vToDouble(inf[17]));
             fd.setVentoVel(vToDouble(inf[18]));
-            registrosEM.add(fd);
             
+            if(registrosEM.containsKey(hashDate)){
+                throw new Exception("Registro duplicado "+hashDate);    
+            } else{
+                registrosEM.put(hashDate, fd);
+            }
         }
     }
     
@@ -75,7 +83,22 @@ public class EstMet {
         String day = d1;
         String hour = d2.substring(0, 2);
         String date = day + " "+ hour+":00";
+        Calendar time = Tools.getTime("yyyy/MM/dd HH:mm", date);
+        time.add(Calendar.HOUR, -3);
 
-        return Tools.getTime("yyyy/MM/dd HH:mm", date);
+        return time;
+    }
+
+    private String toHashDate(Calendar date) {
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMddHH");
+            // Output "Wed Sep 26 14:23:28 EST 2012"
+            
+            String formatted = format1.format(date.getTime());
+            return(formatted);            
+            // Output "Wed Sep 26 00:00:00 EST 2012"
+        } catch (Exception ex) {
+            return "0000000000";
+        }
     }
 }

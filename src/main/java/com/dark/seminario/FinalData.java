@@ -1,5 +1,6 @@
 package com.dark.seminario;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -25,6 +26,7 @@ public class FinalData {
     private double ventoDir;
     private double ventoMax;
     private double ventoVel;
+    private Double energiaGerada;
 
     /**
      * @return the precipitacao
@@ -276,5 +278,38 @@ public class FinalData {
      */
     public void setDate(Calendar date) {
         this.date = date;
+    }
+
+    public void setEnergiaGerada(double energiaGerada) {
+        this.energiaGerada = energiaGerada;
+    }
+    public double getEnergiaGerada() {
+        return energiaGerada;
+    }
+
+    public boolean hasEnergiaGerada() {
+        return energiaGerada != null;
+    }
+
+    @Override
+    public String toString() {
+        String out = "";
+        out += "Data: "+toDate(date);
+        out += " Radiação: "+radiacaoGlobal;
+        out += " Energia: "+energiaGerada;
+        return out;
+    }
+    
+    private String toDate(Calendar date) {
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-HH");
+            // Output "Wed Sep 26 14:23:28 EST 2012"
+            
+            String formatted = format1.format(date.getTime());
+            return(formatted);            
+            // Output "Wed Sep 26 00:00:00 EST 2012"
+        } catch (Exception ex) {
+            return "0000000000";
+        }
     }
 }
