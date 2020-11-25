@@ -312,4 +312,64 @@ public class FinalData {
             return "0000000000";
         }
     }
+    
+    private String toISODate(Calendar date) {
+        try {
+            SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            // Output "Wed Sep 26 14:23:28 EST 2012"
+            
+            String formatted = format1.format(date.getTime());
+            return(formatted);            
+            // Output "Wed Sep 26 00:00:00 EST 2012"
+        } catch (Exception ex) {
+            return "0000000000";
+        }
+    }
+
+    public static String toCSVTitle() {
+        String text;
+        text = "data;";
+        text += "precipitacao;";
+        text += "pressao;";
+        text += "pressaoMaxAnt;";
+        text += "pressaoMinAnt;";
+        text += "radiacaoGlobal;";
+        text += "temperatura;";
+        text += "temperaturaMaxAnt;";
+        text += "temperaturaMinAnt;";
+        text += "temperaturaOrvalho;";
+        text += "temperaturaOrvalhoMaxAnt;";
+        text += "temperaturaOrvalhoMinAnt;";
+        text += "umidade;";
+        text += "umidadeMaxAnt;";
+        text += "umidadeMinAnt;";
+        text += "ventoDir;";
+        text += "ventoMax;";
+        text += "ventoVel;";
+        text += "energiaGerada;";
+        return text;
+    }
+    public String toCSV() {
+        String text;
+        text = toISODate(date)+";";
+        text += precipitacao + ";";
+        text += pressao + ";";
+        text += pressaoMaxAnt + ";";
+        text += pressaoMinAnt + ";";
+        text += radiacaoGlobal + ";";
+        text += temperatura + ";";
+        text += temperaturaMaxAnt + ";";
+        text += temperaturaMinAnt + ";";
+        text += temperaturaOrvalho + ";";
+        text += temperaturaOrvalhoMaxAnt + ";";
+        text += temperaturaOrvalhoMinAnt + ";";
+        text += umidade + ";";
+        text += umidadeMaxAnt + ";";
+        text += umidadeMinAnt + ";";
+        text += ventoDir + ";";
+        text += ventoMax + ";";
+        text += ventoVel + ";";
+        text += energiaGerada + ";";
+        return text;
+    }
 }
