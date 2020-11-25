@@ -38,8 +38,6 @@ public class Fotovol {
             // Retrieving the number of sheets in the Workbook
             System.out.println("A Tabela possui" + workbook.getNumberOfSheets() + " Folha(s) : ");
             
-            // 3. Or you can use a Java 8 forEach with lambda
-            System.out.println("Retrieving Sheets using Java 8 forEach with lambda");
             workbook.forEach(sheet -> {
                 System.out.println("=> " + sheet.getSheetName());
             });
@@ -54,9 +52,6 @@ public class Fotovol {
         try {
             DataFormatter dataFormatter = new DataFormatter();
             
-            // 3. Or you can use Java 8 forEach loop with lambda
-            System.out.println("\n\nIterating over Rows and Columns using Java 8 forEach with lambda\n");
-                        
             int jump = 0;
             for (Row row: sheet) {
                 if(jump++ > 2){
@@ -95,10 +90,8 @@ public class Fotovol {
             workbook.close();
             
             for (String key : powerByHours.keySet()) {
-                
                 //Capturamos o valor a partir da chave
                 TimeStep value = powerByHours.get(key);
-                System.out.println(key + " = " + value.count + "    "+value.power + "  Media "+value.getMean());
             }
         } catch (IOException ex) {
             Logger.getLogger(Fotovol.class.getName()).log(Level.SEVERE, null, ex);
