@@ -52,13 +52,13 @@ public class Main {
             FileWriter csvOutputFile = new FileWriter(CSV_Saida);
             
             csvOutputFile.append(FinalData.toCSVTitle());
-            csvOutputFile.append("\n");
+            csvOutputFile.append("\r\n");
             
             for(String key : keySet){
                 if(registrosEM.get(key).hasEnergiaGerada()){
                     String toCSV = registrosEM.get(key).toCSV();
                     csvOutputFile.append(toCSV);
-                    csvOutputFile.append("\n");
+                    csvOutputFile.append("\r\n");
                 }
             }
             csvOutputFile.flush();
