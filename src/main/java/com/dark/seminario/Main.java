@@ -16,7 +16,11 @@ import java.util.logging.Logger;
 public class Main {
     
 //    public static final String  XLSX_FILE_PATH = "D:\\Rodrigo\\OneDrive\\UNISINOS\\Conteudo\\2 -  Seminário [Josiane Brietzke Porto]\\dados\\Logs Inversor solar Michel\\1-Dia Sol\\EOAC909168 history data - 2020-10-20_2020-10-20.xls";;
-    public static final String  XLSX_FILE_PATH = "/home/rmichel/Desktop/al/DadosSolar.xls";
+    public static final String  XLSX_FILE_PATH1 = "/home/rmichel/Desktop/al/DadosSolar1.xls";
+    public static final String  XLSX_FILE_PATH2 = "/home/rmichel/Desktop/al/DadosSolar2.xls";
+    public static final String  XLSX_FILE_PATH3 = "/home/rmichel/Desktop/al/DadosSolar3.xls";
+    public static final String  XLSX_FILE_PATH4 = "/home/rmichel/Desktop/al/DadosSolar4.xls";
+    
     public static final String  CSV_FILE = "/home/rmichel/Desktop/al/estMet.csv";
     public static final String  CSV_Saida = "saida.csv";
     
@@ -34,10 +38,22 @@ public class Main {
         }
         
         powerByHours = new HashMap<>();
-        Fotovol fv = new Fotovol(powerByHours);
-        fv.loadFile(XLSX_FILE_PATH);
-        fv.extractData();
         
+        Fotovol fv1 = new Fotovol(powerByHours);
+        fv1.loadFile(XLSX_FILE_PATH1);
+        fv1.extractData();
+        
+        Fotovol fv2 = new Fotovol(powerByHours);
+        fv2.loadFile(XLSX_FILE_PATH2);
+        fv2.extractData();
+        
+        Fotovol fv3 = new Fotovol(powerByHours);
+        fv3.loadFile(XLSX_FILE_PATH3);
+        fv3.extractData();
+        
+        Fotovol fv4 = new Fotovol(powerByHours);
+        fv4.loadFile(XLSX_FILE_PATH4);
+        fv4.extractData();
         
         if(registrosEM != null){
             Set<String> keySet = registrosEM.keySet();
@@ -61,6 +77,12 @@ public class Main {
                     csvOutputFile.append("\r\n");
                 }
             }
+            
+            
+            String toCSV = registrosEM.get("2020100913").toCSV();
+            csvOutputFile.append(toCSV);
+            csvOutputFile.append("\r\n");
+            
             csvOutputFile.flush();
             csvOutputFile.close();
         }

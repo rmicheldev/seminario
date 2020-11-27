@@ -369,7 +369,7 @@ public class FinalData {
         text += ventoDir + ",";
         text += ventoMax + ",";
         text += ventoVel + ",";
-        text += energiaGerada + ",";
+        text += Math.round(energiaGerada) + ",";
         return text;
     }
 }
