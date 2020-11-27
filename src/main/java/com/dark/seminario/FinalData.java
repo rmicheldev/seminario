@@ -1,5 +1,6 @@
 package com.dark.seminario;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -8,6 +9,7 @@ import java.util.Calendar;
  * @author rmichel
  */
 public class FinalData {
+    private static DecimalFormat df = new DecimalFormat("0.00");
     private Calendar date;
     private double precipitacao;
     private double pressao;
@@ -369,7 +371,7 @@ public class FinalData {
         text += ventoDir + ",";
         text += ventoMax + ",";
         text += ventoVel + ",";
-        text += Math.round(energiaGerada) + ",";
+        text += df.format(energiaGerada).toString().replace(",", ".") + ",";
         return text;
     }
 }
