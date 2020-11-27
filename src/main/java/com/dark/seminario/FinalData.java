@@ -371,7 +371,7 @@ public class FinalData {
         text += ventoDir + ",";
         text += ventoMax + ",";
         text += ventoVel + ",";
-        text += df.format(energiaGerada).toString().replace(",", ".") + ",";
+        text += df.format(energiaGerada).toString().replace(",", ".");
         return text;
     }
 }
